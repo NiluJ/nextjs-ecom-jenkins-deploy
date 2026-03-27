@@ -2,8 +2,12 @@ pipeline {
     agent any
 
     environment {
-        APP_DIR = "/var/www/ecom-nextjs-app"
-    }
+    APP_DIR = "/var/www/ecom-nextjs-app"
+
+    NEXT_PUBLIC_SANITY_TOKEN = credentials('NEXT_PUBLIC_SANITY_TOKEN')
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = credentials('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY')
+    NEXT_PUBLIC_STRIPE_SECRET_KEY = credentials('NEXT_PUBLIC_STRIPE_SECRET_KEY')
+}
 
     stages {
 
