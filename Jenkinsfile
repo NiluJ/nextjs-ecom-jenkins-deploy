@@ -61,13 +61,20 @@ pipeline {
         }
 
         stage('Start Application Publicly') {
-            steps {
-                sh '''
-                cd $APP_DIR
-                nohup npm run start -- -H 0.0.0.0 -p 3000 > app.log 2>&1 &
-                '''
-            }
-        }
+    steps {
+        sh '''
+        cd $APP_DIR
+
+        echo "Stopping previous app if running..."
+        pkill -f "next start" || true
+
+        echo "Starting Next.js app in detached mode..."
+        setsid npm run start -- -H 0.0.0.0 -p 3000 > app.log 2>&1 < /dev/null &
+
+        sleep 5
+        '''
+    }
+}
 
         stage('Verify Application Running') {
             steps {
